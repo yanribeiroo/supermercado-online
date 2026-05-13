@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - SuperMarket Online</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body class="admin-page">
+    <div class="admin-login-overlay active" id="adminLoginOverlay">
+        <div class="admin-login-box">
+            <h2>Entrar como Administrador</h2>
+            <p>Digite a senha para acessar o painel administrativo.</p>
+            <form id="adminLoginForm">
+                <input type="password" id="adminPasswordInput" placeholder="Senha" required autofocus>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </form>
+            <p class="admin-login-error" id="adminLoginError"></p>
+        </div>
+    </div>
+
+    <!-- Header Admin -->
+    <header class="header admin-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>⚙️ Admin SuperMarket</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Loja</a>
+                    <a href="admin.html" class="nav-link active">Admin</a>
+                </nav>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar de Navegação -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <nav class="admin-nav">
+            <button class="admin-nav-link active" data-section="dashboard">
+                📊 Dashboard
+            </button>
+            <button class="admin-nav-link" data-section="products">
+                📦 Produtos
+            </button>
+            <button class="admin-nav-link" data-section="orders">
+                📋 Pedidos
+            </button>
+            <button class="admin-nav-link" data-section="reports">
+                📈 Relatórios
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Conteúdo Admin -->
+    <main class="admin-main">
+        <div class="container">
+            <!-- Dashboard -->
+            <section class="admin-section active" id="dashboardSection">
+                <h2>Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-info">
+                            <h3>Produtos</h3>
+                            <p class="stat-value" id="totalProducts">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-info">
+                            <h3>Pedidos</h3>
+                            <p class="stat-value" id="totalOrders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <h3>Vendas</h3>
+                            <p class="stat-value" id="totalSales">R$ 0,00</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3>Entregues</h3>
+                            <p class="stat-value" id="deliveredOrders">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <h3>Vendas por Dia</h3>
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h3>Status dos Pedidos</h3>
+                        <canvas id="ordersChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <div class="chart-wrapper full-width">
+                        <h3>Produtos Mais Vendidos</h3>
+                        <canvas id="topProductsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gerenciar Produtos -->
+            <section class="admin-section hidden" id="productsSection">
+                <div class="section-header">
+                    <h2>Gerenciar Produtos</h2>
+                    <button class="btn btn-primary" id="addProductBtn">+ Adicionar Produto</button>
+                </div>
+
+                <div class="products-table-wrapper">
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Estoque</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <!-- Produtos serão preenchidos aqui -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal Adicionar/Editar Produto -->
+                <div class="modal" id="productModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="productModalTitle">Adicionar Produto</h2>
+                            <button class="modal-close" id="closeProductModal">&times;</button>
+                        </div>
+                        <form id="productForm" class="product-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productName">Nome</label>
+                                    <input type="text" id="productName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productCategory">Categoria</label>
+                                    <select id="productCategory" required>
+                                        <option value="">Selecione uma categoria</option>
+                                        <option value="Frutas">Frutas</option>
+                                        <option value="Verduras">Verduras</option>
+                                        <option value="Alimentos">Alimentos</option>
+                                        <option value="Bebidas">Bebidas</option>
+                                        <option value="Laticínios">Laticínios</option>
+                                        <option value="Carnes">Carnes</option>
+                                        <option value="Grãos">Grãos</option>
+                                        <option value="Higiene">Higiene</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productPrice">Preço (R$)</label>
+                                    <input type="number" id="productPrice" required step="0.01" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="productStock">Estoque</label>
+                                    <input type="number" id="productStock" required min="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="productDescription">Descrição</label>
+                                <textarea id="productDescription" required rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="productImage">URL da Imagem</label>
+                                <input type="url" id="productImage" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gerenciar Pedidos -->
+            <section class="admin-section hidden" id="ordersSection">
+                <h2>Gerenciar Pedidos</h2>
+                
+                <div class="orders-filter">
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">Todos os Status</option>
+                        <option value="recebido">Pedido Recebido</option>
+                        <option value="preparando">Preparando</option>
+                        <option value="entrega">Saiu para Entrega</option>
+                        <option value="entregue">Entregue</option>
+                    </select>
+                </div>
+
+                <div class="orders-table-wrapper">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Cliente</th>
+                                <th>Data</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- Pedidos serão preenchidos aqui -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal Detalhes Pedido -->
+                <div class="modal" id="orderModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Detalhes do Pedido</h2>
+                            <button class="modal-close" id="closeOrderModal">&times;</button>
+                        </div>
+                        <div class="order-details" id="orderDetails">
+                            <!-- Detalhes serão preenchidos aqui -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Relatórios -->
+            <section class="admin-section hidden" id="reportsSection">
+                <h2>Relatórios</h2>
+                
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>Período</h3>
+                        <div class="date-range">
+                            <input type="date" id="dateFrom">
+                            <span>até</span>
+                            <input type="date" id="dateTo">
+                            <button class="btn btn-sm" id="generateReportBtn">Gerar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-content" id="reportContent">
+                    <div class="chart-wrapper">
+                        <h3>Faturamento</h3>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Notificação -->
+    <div class="notification" id="notification">
+        <span id="notificationMessage"></span>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

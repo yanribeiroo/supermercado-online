@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Pedidos - SuperMarket Online</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>🛒 SuperMarket</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Início</a>
+                    <a href="pedidos.html" class="nav-link active">Meus Pedidos</a>
+                    <a href="admin.html" class="nav-link admin-link">Admin</a>
+                </nav>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu Mobile -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-menu-link">Início</a>
+        <a href="pedidos.html" class="mobile-menu-link">Meus Pedidos</a>
+        <a href="admin.html" class="mobile-menu-link">Admin</a>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <section class="orders-page">
+        <div class="container">
+            <h2>Meus Pedidos</h2>
+            
+            <div class="orders-list" id="ordersList">
+                <!-- Pedidos serão preenchidos aqui -->
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                <h3>Nenhum pedido realizado ainda</h3>
+                <p>Comece suas compras agora!</p>
+                <a href="index.html" class="btn btn-primary">Ir para Loja</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Detalhes do Pedido -->
+    <div class="modal" id="orderDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalhes do Pedido</h2>
+                <button class="modal-close" id="closeOrderDetailModal">&times;</button>
+            </div>
+            <div class="order-detail-content" id="orderDetailContent">
+                <!-- Detalhes serão preenchidos aqui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificação -->
+    <div class="notification" id="notification">
+        <span id="notificationMessage"></span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SuperMarket Online. Todos os direitos reservados.</p>
+            <p>Desenvolvido com ❤️ para sua comodidade</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
